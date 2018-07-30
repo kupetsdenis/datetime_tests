@@ -14,7 +14,8 @@ namespace datetime_tests.Tests
     public class NBRB_API_Suite
     {
         private readonly CurrencyRequestHelper _currencyRequestHelper = new CurrencyRequestHelper();
-
+        private const string NOT_FOUND_ERROR_MESSAGE = "The remote server returned an error: (404) Not Found.";
+        private const string BAD_REQUEST_ERROR_MESSAGE = "The remote server returned an error: (400) Bad Request.";
         [DataTestMethod]
         [DataRow(
             @"{""Cur_ID"":2,""Cur_ParentID"":2,""Cur_Code"":""012"",""Cur_Abbreviation"":""DZD"",""Cur_Name"":""Алжирский динар"",""Cur_Name_Bel"":""Алжырскі дынар"",""Cur_Name_Eng"":""Algerian Dinar"",""Cur_QuotName"":""1 Алжирский динар"",""Cur_QuotName_Bel"":""1 Алжырскі дынар"",""Cur_QuotName_Eng"":""1 Algerian Dinar"",""Cur_NameMulti"":"""",""Cur_Name_BelMulti"":"""",""Cur_Name_EngMulti"":"""",""Cur_Scale"":1,""Cur_Periodicity"":1,""Cur_DateStart"":""1991-01-01T00:00:00"",""Cur_DateEnd"":""2016-06-30T00:00:00""}")]
@@ -29,12 +30,11 @@ namespace datetime_tests.Tests
         }
 
         [TestMethod]
-        [DataRow("0", "The remote server returned an error: (404) Not Found.")]
-        [DataRow("-1", "The remote server returned an error: (404) Not Found.")]
-        [DataRow("1111111", "The remote server returned an error: (404) Not Found.")]
-        [DataRow("abc#$@#&*?", "The remote server returned an error: (400) Bad Request.")]
-        [DataRow("1111111111111111111111111111111111111111111111111",
-            "The remote server returned an error: (400) Bad Request.")]
+        [DataRow("0", NOT_FOUND_ERROR_MESSAGE)]
+        [DataRow("-1", NOT_FOUND_ERROR_MESSAGE)]
+        [DataRow("1111111", NOT_FOUND_ERROR_MESSAGE)]
+        [DataRow("abc#$@#&*?", BAD_REQUEST_ERROR_MESSAGE)]
+        [DataRow("1111111111111111111111111111111111111111111111111", BAD_REQUEST_ERROR_MESSAGE)]
         public void InvalidCurrencyId(string currencyId, string exceptionMessage)
         {
             try
